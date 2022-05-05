@@ -1,2 +1,0 @@
-data = load USPS.mat;
-

@@ -1,3 +1,6 @@
+# Class here is our complete implementation for performing PCA.
+#  see example for how to use in reconstruction_error.py
+
 import numpy as np
 # shell is loosly modeled after sklearn.decomposition.PCA so that the two can be easily compared
 
@@ -47,11 +50,6 @@ class NumericPCA:
         X_diff = X-X_mean # subtract the mean to center the matrix
         S = np.matmul(X_diff.T,X_diff)/n
         return(S)
-    
-
-    
-
-# ALGORITHMS FROM CLASS
 
 # following is based off from algorithm 26.1
 def _hessenberg(matrix):
@@ -182,16 +180,20 @@ def _getSign(x):
 # FOLLOWING FUNCTION IS BORROWED FROM MY SUBMISSION FOR HW09
 # Backward Substitution Algorithm
 def _backwardSub(U,y):
+    # print(U)
+    # print(y)
     n = y.shape[0]
     x = np.ones(n) # construct basic y
     for i in range(n-1,-1,-1):
         # print('i',i)
-        c=0
-        for j in range(n-1,i,-1):
-            # print(' j',j)
-            c+=U[i,j]*x[j]
-        x[i] = (y[i]-c)/U[i,i]
-        # print(i)
+        if np.all((U[i,:] == 0)): x[i] = np.random.randint(10)
+        else:
+            c=0
+            for j in range(n-1,i,-1):
+                # print(' j',j)
+                c+=U[i,j]*x[j]
+            x[i] = (y[i]-c)/U[i,i]
+            # print(i)
 
     return(x)
 

@@ -1,3 +1,5 @@
+# Script for analyzing error between our appraoch and sklearn PCA
+
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -33,7 +35,7 @@ def getReconstructionError(ogData,newData):
 results = pd.DataFrame(columns=['trial','n_components','method','rmse'])
 
 for t in range(TRIALS):
-    X = np.random.randint(10,size=(N,M))
+    X = np.random.randint(1,10,size=(N,M))
     
     for p in N_COMPONENTS:
         ignore_run = False
@@ -56,9 +58,10 @@ for t in range(TRIALS):
         
         # print(ignore_run)
         if not ignore_run:
-            r = [{'trial': t,'n_components': p,'method': 'project','nrmse': nPCA_error,},
-                {'trial': t,'n_components': p,'method': 'sklearn','nrmse': pca_error,}]
+            r = [{'trial': t,'n_components': p,'method': 'project','rmse': nPCA_error,},
+                {'trial': t,'n_components': p,'method': 'sklearn','rmse': pca_error,}]
             results = results.append(r, True)
+            # print(r)
             
             # print(results.head())
             
